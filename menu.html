@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú - CAFÉ XIBALBA</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-dark-brown: #1a1916;
+            --color-background-card: #2c2a26;
+            --color-light-brown: #be8160;
+            --color-text-light: #F8F8F8;
+            --color-text-muted: #a0a0a0;
+            --color-accent: #A0522D;
+            --color-text-dark: #272622;
+            --color-border: rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- ESTILOS GENERALES Y RESET --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: var(--color-dark-brown);
+            color: var(--color-text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- BARRA DE NAVEGACIÓN (Sin cambios) --- */
+        .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 50px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #20201cc5;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.logo {
+    display: flex;
+    align-items: baseline;
+    color: var(--color-text-light);
+    text-decoration: none;
+}
+
+.logo span:first-child {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.logo span:last-child {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-size: 1.2rem;
+    margin-left: 5px;
+}
+
+.desktop-nav {
+    background-color: white;
+    border-radius: 30px;
+    padding: 2px 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 25px;
+}
+
+.desktop-nav a {
+    color: var(--color-text-dark);
+    text-decoration: none;
+    padding: 5px 15px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cart-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+    padding: 10px;
+}
+
+.menu-toggle img {
+    width: 28px;
+    height: auto;
+    display: block;
+}
+
+/* --- Navegación Móvil --- */
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #1E1E1E;
+    z-index: 1002;
+    transform: translateX(-100%);
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    padding: 20px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-nav.active {
+    transform: translateX(0);
+}
+
+
+.mobile-nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2.5rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.mobile-nav-links a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--color-text-light);
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    padding: 15px 0;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.mobile-nav-links a:hover {
+    color: #ddd;
+}
+
+.mobile-nav-links a::after {
+    content: '>';
+    font-size: 1rem;
+    color: #888;
+}
+
+.nav-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
+}
+
+.mobile-nav-links a span {
+    flex-grow: 1;
+}
+
+.account-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.account-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 30px;
+}
+
+.account-btn span {
+    color: var(--color-text-light);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.account-btn img, .cart-btn img {
+    width: 100%;
+    height: auto;
+    max-width: 28px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 15px);
+    background-color: black;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+    z-index: 1;
+    overflow: hidden;
+    transform: translateY(-10px);
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    padding: 10px 0;
+}
+
+.dropdown-content.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dropdown-content a {
+    color: var(--color-text-light);
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.dropdown-content a:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.dropdown-content a:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+        
+        @keyframes kenburns { 0% { transform: scale(1.1) translate(0, 0); } 50% { transform: scale(1.15) translate(-2%, 2%); } 100% { transform: scale(1.1) translate(0, 0); } }
+        @keyframes titleFadeIn { from { opacity: 0; transform: translateY(30px); filter: blur(4px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .menu-hero { height: 50vh; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; overflow: hidden; }
+        .hero-background { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4); z-index: 1; animation: kenburns 20s ease-in-out infinite; }
+        .hero-content { position: relative; z-index: 2; }
+        .hero-content h1 { font-family: 'Poppins', sans-serif; font-size: 4rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.5); margin-bottom: 10px; opacity: 0; animation: titleFadeIn 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.2s forwards; }
+        .hero-content p { font-size: 2rem; font-weight: 200; color: #ffffffa9; opacity: 0; animation: titleFadeIn 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.5s forwards; }
+
+        .menu-container { padding: 40px 50px 60px; max-width: 1400px; margin: 0 auto; }
+        
+        .menu-body { display: flex; gap: 40px; align-items: flex-start; }
+        .filters-sidebar { width: 250px; flex-shrink: 0; position: sticky; top: 100px; }
+        .sidebar-section { margin-bottom: 30px; }
+        .sidebar-section h3 { font-family: 'Poppins', sans-serif; font-size: 1.3rem; font-weight: 600; padding-bottom: 10px; border-bottom: 1px solid var(--color-border); margin-bottom: 15px; }
+        .filter-list { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+        .filter-btn { background: none; border: none; color: var(--color-text-muted); font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 1rem; padding: 8px 12px; cursor: pointer; transition: color 0.3s, background-color 0.3s; border-radius: 8px; width: 100%; text-align: left; display: flex; justify-content: space-between; align-items: center; }
+        .filter-btn.active-filter { color: var(--color-text-light); background-color: rgba(255, 255, 255, 0.05); font-weight: 600; }
+        .filter-btn:hover:not(.active-filter) { background-color: rgba(255, 255, 255, 0.03); color: var(--color-text-light); }
+        .filter-count { font-size: 0.8rem; color: var(--color-text-muted); }
+
+        /* --- NUEVOS ESTILOS PARA FILTRO DE PRECIO POR INPUT --- */
+        .price-input-group { display: flex; gap: 10px; }
+        .price-input-wrapper { position: relative; flex: 1; }
+        .price-input-wrapper span { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--color-text-muted); }
+        .price-input-group input { width: 100%; background-color: rgba(0,0,0,0.2); border: 1px solid var(--color-border); border-radius: 8px; padding: 10px 10px 10px 28px; color: var(--color-text-light); font-family: 'Poppins', sans-serif; font-size: 1rem; }
+        .price-input-group input:focus { outline: none; border-color: var(--color-accent); }
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+        .main-content { flex-grow: 1; width: 100%; }
+        .content-header { margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        #results-count { font-size: 1rem; color: var(--color-text-muted); font-weight: 500; }
+        .controls-top-row { display: flex; align-items: center; gap: 20px; flex-grow: 1; }
+        .search-wrapper { position: relative; flex-grow: 1; min-width: 300px; }
+        #searchInput { width: 100%; background-color: rgba(0,0,0,0.2); border: 1px solid var(--color-border); border-radius: 25px; padding: 12px 20px 12px 50px; color: var(--color-text-light); font-family: 'Poppins', sans-serif; font-size: 1rem; transition: border-color 0.3s ease; }
+        .search-icon { position: absolute; top: 50%; left: 15px; transform: translateY(-50%); width: 20px; height: 20px; fill: var(--color-text-muted); }
+        #searchInput:focus { outline: none; border-color: var(--color-accent); }
+        .sort-wrapper { display: flex; align-items: center; gap: 10px; }
+        #sortOptions { background-color: transparent; border: none; color: var(--color-text-light); font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 500; padding: 5px; cursor: pointer; appearance: none; -webkit-appearance: none; background-color: #1a1916; background-repeat: no-repeat; background-position: right 5px center; padding-right: 25px; }
+        
+        /* CAMBIO: Tarjetas de producto más pequeñas */
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
+        
+        .product-card { background: linear-gradient(160deg, #3a3732 0%, #252320 100%); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6); position: relative; border: 1px solid var(--color-border); transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; opacity: 0; animation: fadeIn 0.6s ease forwards; }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7); border-color: var(--color-accent); }
+        .card-img-container { width: 100%; height: 200px; /* Reducido de 250px */ overflow: hidden; position: relative; }
+        .card-img-container::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 70%; background: linear-gradient(to top, rgba(0,0,0,0.85), transparent); z-index: 2; transition: opacity 0.4s ease; }
+        .product-card:hover .card-img-container::after { opacity: 0.8; }
+        .product-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease-out; z-index: 1; }
+        .product-card:hover img { transform: scale(1.1); }
+        .product-name { font-family: 'Poppins', sans-serif; font-size: 1.6rem; /* Reducido de 1.8rem */ font-weight: 700; color: #fff; position: absolute; bottom: 20px; left: 20px; right: 20px; z-index: 3; line-height: 1.2; text-shadow: 0 2px 8px rgba(0,0,0,0.8); transition: transform 0.3s ease; }
+        .product-card:hover .product-name { transform: translateY(-10px); }
+        .card-content { padding: 20px; text-align: left; flex-grow: 1; display: flex; flex-direction: column;}
+        .card-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; gap: 10px; }
+        .product-category-tag { display: inline-block; background-color: rgba(255, 255, 255, 0.05); border: 1px solid var(--color-border); color: var(--color-text-muted); font-family: 'Poppins', sans-serif; font-size: 0.7rem; font-weight: 500; padding: 4px 10px; border-radius: 15px; text-transform: uppercase; transition: background-color 0.3s, color 0.3s; }
+        .product-card:hover .product-category-tag { background-color: var(--color-accent); color: var(--color-text-dark); }
+        .product-price { font-family: 'Poppins', sans-serif; font-size: 1.1rem; font-weight: 600; color: var(--color-text-light); white-space: nowrap; }
+        .product-description { font-family: 'Be Vietnam Pro', sans-serif; font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.6; margin-top: auto; transition: opacity 0.3s ease, transform 0.3s ease; }
+
+        .animate-on-scroll { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1), transform 0.8s cubic-bezier(0.23, 1, 0.32, 1); }
+        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+        .no-results-message { grid-column: 1 / -1; text-align: center; font-size: 1.2rem; color: var(--color-text-muted); padding: 40px 0; }
+
+        @media (max-width: 992px) {
+            .navbar { padding: 15px 25px; } .desktop-nav, .account-menu { display: none; } .menu-toggle { display: block; }
+            .menu-container { padding: 40px 25px; } .hero-content h1 { font-size: 3rem; }
+            .menu-body { flex-direction: column; }
+            .filters-sidebar { width: 100%; position: static; margin-bottom: 30px; }
+            .filter-list { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 15px; border-bottom: 1px solid var(--color-border); padding-bottom: 15px; }
+            .filter-btn { width: auto; text-transform: uppercase; font-size: 0.9rem; }
+            .sidebar-section h3 { text-align: center; }
+            .price-input-group { justify-content: center; }
+        }
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; } .hero-content p { font-size: 1.2rem; }
+            .content-header { flex-direction: column; align-items: stretch; }
+            .controls-top-row { flex-direction: column; align-items: stretch; }
+            .search-wrapper { min-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <a href="Inicio.html" class="logo"><span>CAFÉ</span><span>XIBALBA</span></a>
+        <nav class="desktop-nav"><a href="Inicio.html">Inicio</a><a href="menu.html">Menú</a><a href="#nosotros">Nosotros</a><a href="#contacto">Contacto</a></nav>
+        <div class="header-controls"><div class="account-menu"><button class="account-btn"><img src="icons/user.svg" alt="Icono de cuenta"><span>Cuenta</span></button><div class="dropdown-content"><a href="#login">Iniciar Sesión</a><a href="#signup">Crear Cuenta</a><a href="#redeem">Canjear</a></div></div><a href="#" class="cart-btn"><img src="icons/shopping.svg" alt="Carrito de compras"></a><button class="menu-toggle" aria-label="Abrir menú"><img src="icons/menu.svg" alt="Abrir menú"></button></div>
+    </header>
+    <div class="mobile-nav">
+        <div class="mobile-nav-header"><div class="logo"><span>CAFÉ</span><span>XIBALBA</span></div><button class="close-btn" aria-label="Cerrar menú">&times;</button></div><nav class="mobile-nav-links"><a href="Inicio.html"><span>Inicio</span></a><a href="menu.html"><span>Menú</span></a><a href="#nosotros"><span>Nosotros</span></a><a href="#contacto"><span>Contacto</span></a><a href="#cuenta"><img src="icons/user.svg" alt="Icono de cuenta" class="nav-icon"><span>Cuenta</span></a></nav>
+    </div>
+
+    <section class="menu-hero">
+        <img src="https://images.pexels.com/photos/261434/pexels-photo-261434.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Ambiente de cafetería" class="hero-background">
+        <div class="hero-content">
+            <h1>Nuestro Menú</h1>
+            <p>Sabores auténticos que nos distinguen</p>
+        </div>
+    </section>
+
+    <main class="menu-container">
+        <div class="menu-body">
+            <aside class="filters-sidebar animate-on-scroll">
+                <div class="sidebar-section">
+                    <h3>Categoría</h3>
+                    <div id="category-filters" class="filter-list"></div>
+                </div>
+                <div class="sidebar-section">
+                    <h3>Precio</h3>
+                    <div class="price-input-group">
+                        <div class="price-input-wrapper">
+                            <span>$</span>
+                            <input type="number" id="min-price" placeholder="Mínimo" min="0">
+                        </div>
+                        <div class="price-input-wrapper">
+                            <span>$</span>
+                            <input type="number" id="max-price" placeholder="Máximo" min="0">
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <div class="main-content">
+                <div class="content-header animate-on-scroll">
+                    <p id="results-count"></p>
+                    <div class="controls-top-row">
+                        <div class="search-wrapper">
+                             <img class="search-icon" src="icons/buscador.svg"></svg>
+                            <input type="text" id="searchInput" placeholder="Buscar platillo...">
+                        </div>
+                        <div class="sort-wrapper">
+                            <label for="sortOptions">Ordenar por:</label>
+                            <select id="sortOptions">
+                                <option value="default">Relevancia</option><option value="price-asc">Precio: Menor a Mayor</option><option value="price-desc">Precio: Mayor a Menor</option><option value="name-asc">Nombre: A-Z</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-grid animate-on-scroll"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lógica del Navbar y Animación de Scroll (sin cambios)
+        const menuToggle=document.querySelector(".menu-toggle"),
+        closeBtn=document.querySelector(".close-btn"),
+        mobileNav=document.querySelector(".mobile-nav");
+        menuToggle&&menuToggle.addEventListener("click",()=>mobileNav.classList.add("active")),
+        closeBtn&&closeBtn.addEventListener("click",()=>mobileNav.classList.remove("active"));
+        const accountBtn=document.querySelector(".account-btn"),
+        dropdownContent=document.querySelector(".dropdown-content");
+        accountBtn&&accountBtn.addEventListener("click",function(e){e.stopPropagation(),
+            dropdownContent.classList.toggle("show")}),
+            window.addEventListener("click",function(e){dropdownContent&&!accountBtn.contains(e.target)&&dropdownContent.classList.remove("show")});
+        const observer=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&(e.target.classList.add("visible"),
+        observer.unobserve(e.target))})},{threshold:.1});
+        document.querySelectorAll(".animate-on-scroll").forEach(e=>{observer.observe(e)});
+
+        const products = [
+            { name: 'Nachos', price: 100.00, description: 'Disfruta de la mezcla perfecta de maíz, creando un platillo cremoso y refrescante que te encantará.', category: 'desayunos', categoryDisplay: 'Desayuno', image: 'https://images.pexels.com/photos/10173612/pexels-photo-10173612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' },
+            { name: 'Chilaquiles', price: 95.00, description: 'Totopos de maíz bañados en salsa roja o verde, con queso, crema y cebolla.', category: 'desayunos', categoryDisplay: 'Desayuno', image: 'https://images.pexels.com/photos/1251198/pexels-photo-1251198.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' },
+            { name: 'Hot Cakes', price: 80.00, description: 'Esponjosos y dorados, servidos con miel de maple y mantequilla.', category: 'desayunos', categoryDisplay: 'Desayuno', image: 'https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' },
+            { name: 'Bruschetta', price: 85.00, description: 'Pan tostado con tomates frescos, ajo, albahaca y aceite de oliva.', category: 'cenas', categoryDisplay: 'Cena', image: 'https://images.pexels.com/photos/1437318/pexels-photo-1437318.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' },
+            { name: 'Latte Art', price: 60.00, description: 'Un espresso perfectamente extraído con leche vaporizada y arte.', category: 'bebidas', categoryDisplay: 'Bebida', image: 'https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' }
+        ];
+
+        const searchInput = document.getElementById('searchInput');
+        const sortOptions = document.getElementById('sortOptions');
+        const menuGrid = document.querySelector('.menu-grid');
+        const resultsCountEl = document.getElementById('results-count');
+        const categoryFiltersContainer = document.getElementById('category-filters');
+        // CAMBIO: Selectores para los inputs de precio
+        const minPriceInput = document.getElementById('min-price');
+        const maxPriceInput = document.getElementById('max-price');
+
+        const categories = [ { id: 'recomendados', name: 'Recomendados' }, { id: 'all', name: 'Todos' }, { id: 'desayunos', name: 'Desayunos' }, { id: 'cenas', name: 'Cenas' }, { id: 'bebidas', name: 'Bebidas' } ];
+        
+        function setupCategoryButtons() {
+            categoryFiltersContainer.innerHTML = '';
+            categories.forEach(cat => {
+                const count = getCategoryCount(cat.id);
+                const button = document.createElement('button');
+                button.className = 'filter-btn';
+                button.dataset.category = cat.id;
+                button.innerHTML = `<span>${cat.name}</span><span class="filter-count">${count}</span>`;
+                categoryFiltersContainer.appendChild(button);
+            });
+            categoryFiltersContainer.querySelector('.filter-btn').classList.add('active-filter');
+            
+            document.querySelectorAll('#category-filters .filter-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('#category-filters .filter-btn').forEach(btn => btn.classList.remove('active-filter'));
+                    this.classList.add('active-filter');
+                    updateMenuDisplay();
+                });
+            });
+        }
+
+        function getCategoryCount(categoryId) {
+            if (categoryId === 'all' || categoryId === 'recomendados') return products.length;
+            return products.filter(p => p.category === categoryId).length;
+        }
+
+        function createProductCard(product) {
+            return `
+                <div class="product-card">
+                    <div class="card-img-container">
+                        <img src="${product.image}" alt="${product.name}">
+                        <h3 class="product-name">${product.name}</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span class="product-category-tag">${product.categoryDisplay}</span>
+                            <span class="product-price">MX$${product.price.toFixed(2)}</span>
+                        </div>
+                        <p class="product-description">${product.description}</p>
+                    </div>
+                </div>`;
+        }
+
+        function updateMenuDisplay() {
+            const activeCategory = document.querySelector('#category-filters .active-filter').dataset.category;
+            // CAMBIO: Leer valores de los inputs de precio
+            const minPrice = parseFloat(minPriceInput.value) || 0;
+            const maxPrice = parseFloat(maxPriceInput.value) || Infinity;
+            
+            const searchTerm = searchInput.value.toLowerCase();
+            const sortValue = sortOptions.value;
+            const currentHour = new Date().getHours();
+
+            let filteredProducts = products.filter(product => {
+                const searchMatch = product.name.toLowerCase().includes(searchTerm) || product.description.toLowerCase().includes(searchTerm);
+                
+                let categoryMatch;
+                if (activeCategory === 'recomendados') {
+                    const isDrink = product.category === 'bebidas';
+                    const isBreakfastTime = product.category === 'desayunos' && (currentHour >= 5 && currentHour < 12);
+                    const isDinnerTime = product.category === 'cenas' && (currentHour >= 18 || currentHour < 5);
+                    categoryMatch = isDrink || isBreakfastTime || isDinnerTime;
+                } else {
+                    categoryMatch = activeCategory === 'all' || product.category === activeCategory;
+                }
+
+                const priceMatch = product.price >= minPrice && product.price <= maxPrice;
+
+                return searchMatch && categoryMatch && priceMatch;
+            });
+            
+            resultsCountEl.textContent = `${filteredProducts.length} resultados`;
+
+            if (filteredProducts.length === 0) {
+                 menuGrid.innerHTML = `<p class="no-results-message">No se encontraron productos.</p>`;
+                return;
+            }
+
+            filteredProducts.sort((a, b) => {
+                switch (sortValue) {
+                    case 'price-asc': return a.price - b.price;
+                    case 'price-desc': return b.price - a.price;
+                    case 'name-asc': return a.name.localeCompare(b.name);
+                    default: return 0;
+                }
+            });
+
+            menuGrid.innerHTML = filteredProducts.map(createProductCard).join('');
+            
+            menuGrid.querySelectorAll('.product-card').forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        }
+
+        searchInput.addEventListener('input', updateMenuDisplay);
+        sortOptions.addEventListener('change', updateMenuDisplay);
+        // CAMBIO: Event listeners para los inputs de precio
+        minPriceInput.addEventListener('input', updateMenuDisplay);
+        maxPriceInput.addEventListener('input', updateMenuDisplay);
+
+        // --- Carga inicial ---
+        setupCategoryButtons();
+        updateMenuDisplay();
+    });
+    </script>
+</body>
+</html>
