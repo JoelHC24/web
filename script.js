@@ -195,13 +195,31 @@ function runGlobalLogic() {
 
     // --- LÓGICA DE TOGGLE DE CONTRASEÑA (Global) ---
     // (Sin cambios)
+    // --- LÓGICA DE TOGGLE DE CONTRASEÑA (Global) ---
     document.querySelectorAll('.password-toggle').forEach(toggle => {
-        toggle.addEventListener('click', () => {
-            const passwordInput = toggle.previousElementSibling;
-            passwordInput.type = (passwordInput.type === 'password') ? 'text' : 'password';
-            toggle.textContent = (passwordInput.type === 'password') ? '👁️' : '🙈';
-        });
+        // Seleccionamos los elementos dentro del botón
+    const iconEye = toggle.querySelector('.icon-eye');
+    const iconEyeOff = toggle.querySelector('.icon-eye-off');
+    // El input sigue siendo el hermano anterior
+        const passwordInput = toggle.previousElementSibling;
+
+    toggle.addEventListener('click', () => {
+            // Revisa el tipo de input
+      if (passwordInput.type === 'password') {
+        // Si está oculto -> MOSTRAR
+        passwordInput.type = 'text';
+        iconEye.classList.add('hidden'); // Oculta ojo abierto
+        iconEyeOff.classList.remove('hidden'); // Muestra ojo cerrado
+                toggle.setAttribute('aria-label', 'Ocultar contraseña');
+      } else {
+        // Si está visible -> OCULTAR
+        passwordInput.type = 'password';
+        iconEye.classList.remove('hidden'); // Muestra ojo abierto
+        iconEyeOff.classList.add('hidden'); // Oculta ojo cerrado
+                toggle.setAttribute('aria-label', 'Mostrar contraseña');
+      }
     });
+  });
 
     // --- LÓGICA DE FORMULARIOS (Login y Signup) ---
     // (Sin cambios, asumiendo que ya los tenías)
