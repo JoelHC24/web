@@ -1,0 +1,92 @@
+<header class="navbar">
+    <div class="logo">
+        <span>CAFÉ</span><span>XIBALBA</span>
+    </div>
+    <nav class="desktop-nav">
+        <a href="index.html">Inicio</a>
+        <a href="menu.html">Ménu</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="header-controls">
+        <div class="account-menu">
+            <button class="account-btn"><img src="icons/user.svg" alt="Cuenta"><span id="account-btn-text">Cuenta</span></button>
+            <div class="dropdown-content">
+                <div id="logged-out-menu">
+                    <a href="#" id="login-link">Iniciar Sesión</a>
+                    <a href="#" id="signup-link">Crear Cuenta</a>
+                </div>
+                <div id="logged-in-menu" class="hidden">
+                    <a href="perfil.html">Mi Perfil</a>
+                    <a href="#" id="logout-link">Cerrar Sesión</a>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="cart-btn"><img src="icons/shopping.svg" alt="Carrito"></a>
+        <button class="menu-toggle" aria-label="Abrir menú"><img src="icons/menu.svg" alt="Menú"></button>
+    </div>
+</header>
+
+
+<div class="mobile-nav-container">
+
+    <div class="mobile-nav-panel" id="main-nav">
+        <div class="mobile-nav-header">
+            <div class="logo">
+                <span style="font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.5rem;">CAFÉ</span>
+                <span style="font-family: 'Poppins', sans-serif; font-weight: 300; font-size: 1.2rem; margin-left: 5px;">XIBALBA</span>
+            </div>
+            <button class="close-btn" aria-label="Cerrar menú">&times;</button>
+        </div>
+       <nav class="mobile-nav-links">
+            <a href="index.html">
+                <span>Inicio</span>
+                <img src="icons/derecha.svg" alt="Ir a" class="nav-arrow-icon">
+            </a>
+            <a href="menu.html">
+                <span>Ménu</span>
+                <img src="icons/derecha.svg" alt="Ir a" class="nav-arrow-icon">
+            </a>
+            <a href="#nosotros">
+                <span>Nosotros</span>
+                <img src="icons/derecha.svg" alt="Ir a" class="nav-arrow-icon">
+            </a>
+            <a href="#contacto">
+                <span>Contacto</span>
+                <img src="icons/derecha.svg" alt="Ir a" class="nav-arrow-icon">
+            </a>
+            <a href="#" id="mobile-nav-cuenta-btn">
+                <div class="nav-link-content-with-icon">
+                    <img src="icons/user.svg" alt="Icono de cuenta" class="nav-icon">
+                    <span>Cuenta</span>
+                </div>
+                <img src="icons/derecha.svg" alt="Ir a" class="nav-arrow-icon">
+            </a>
+        </nav>
+    </div>
+
+    <div class="mobile-nav-panel" id="cuenta-nav">
+        <div class="mobile-nav-panel" id="cuenta-nav">
+        <div class="mobile-nav-header cuenta-header">
+            <a href="#" id="cuenta-nav-back-btn" class="cuenta-back-link">
+                <img src="icons/izquierda.svg" alt="Atrás">
+                <span>ATRÁS</span>
+            </a>
+        </div>
+        <nav class="cuenta-options">
+            <h2 class="cuenta-title">CUENTA</h2>
+            
+            <div id="cuenta-logged-out" class="cuenta-links">
+                <a href="#" id="cuenta-login-link">INICIAR SESIÓN</a>
+                <a href="#" id="cuenta-signup-link">CREAR CUENTA</a>
+            </div>
+            
+            <div id="cuenta-logged-in" class="cuenta-links hidden">
+                <a href="perfil.html">MI PERFIL</a>
+                <a href="#" id="cuenta-logout-link">CERRAR SESIÓN</a>
+                <a href="#" id="cuenta-canjear-link-authed">CANJEAR</a>
+            </div>
+        </nav>
+    </div>
+
+</div>
